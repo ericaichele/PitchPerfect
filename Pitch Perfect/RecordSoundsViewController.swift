@@ -76,7 +76,7 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
     func audioRecorderDidFinishRecording(recorder: AVAudioRecorder, successfully flag: Bool) {
         if(flag) {
         recordedAudio = RecordedAudio(filePathUrl: recorder.url, title: recorder.url.lastPathComponent!)
-        self.performSegueWithIdentifier("stopRecording", sender: recordedAudio)
+        performSegueWithIdentifier("stopRecording", sender: recordedAudio)
         } else {
             recordButton.enabled = true
             stopButton.hidden = true

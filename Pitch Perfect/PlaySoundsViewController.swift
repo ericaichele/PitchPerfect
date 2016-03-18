@@ -16,18 +16,21 @@ class PlaySoundsViewController: UIViewController {
     var audioEngine:AVAudioEngine!
     var audioFile:AVAudioFile!
     
-    func goSound() {
-        audioEngine.stop()
-        audioEngine.reset()
-        audioPlayer.stop()
+    func playAudioWithVariableRate(rate: Float) {
+        resetAudioEngine()
         audioPlayer.currentTime = 0.0
+        audioPlayer.rate = rate
         audioPlayer.play()
     }
     
-    func playAudioWithVariablePitch(pitch: Float) {
+    func resetAudioEngine() {
         audioPlayer.stop()
         audioEngine.stop()
         audioEngine.reset()
+    }
+    
+    func playAudioWithVariablePitch(pitch: Float) {
+        resetAudioEngine()
         
         let audioPlayerNode = AVAudioPlayerNode()
         audioEngine.attachNode(audioPlayerNode)
@@ -52,9 +55,7 @@ class PlaySoundsViewController: UIViewController {
     }
     
     func playAudioWithEcho(reverb: Float) {
-        audioPlayer.stop()
-        audioEngine.stop()
-        audioEngine.reset()
+        resetAudioEngine()
         
         let audioPlayerNode = AVAudioPlayerNode()
         audioEngine.attachNode(audioPlayerNode)
@@ -94,13 +95,13 @@ class PlaySoundsViewController: UIViewController {
     }
     
     @IBAction func slowSound(sender: AnyObject) {
-        audioPlayer.rate = 0.5
-        goSound()
+        //audioPlayer.rate = 0.5
+        playAudioWithVariableRate(0.5)
     }
     
     @IBAction func fastSound(sender: UIButton) {
-        audioPlayer.rate = 2.0
-        goSound()
+        //audioPlayer.rate = 2.0
+        playAudioWithVariableRate(2.0)
 
     }
     
