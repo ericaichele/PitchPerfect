@@ -14,9 +14,9 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var recordLabel: UILabel!
     @IBOutlet weak var stopButton: UIButton!
-    @IBOutlet weak var pauseButton: UIButton!
-    @IBOutlet weak var resumeButton: UIButton!
     @IBOutlet weak var infoLabel: UILabel!
+    @IBOutlet weak var stopResumeButton: UIButton!
+    
     
     var audioRecorder:AVAudioRecorder!
     var recordedAudio:RecordedAudio!
@@ -25,19 +25,16 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
         recordLabel.hidden = true
         stopButton.hidden = true
         recordButton.enabled = true
-        pauseButton.hidden = true
-        resumeButton.hidden = true
         infoLabel.hidden = false
         infoLabel.text = "Tap to Record"
+        stopResumeButton.hidden = true
     }
 
     @IBAction func recordAudio(sender: UIButton) {
         recordLabel.hidden = false
         stopButton.hidden = false
         recordButton.enabled = false
-        pauseButton.hidden = false
-        resumeButton.hidden = false
-        resumeButton.enabled = false
+        stopResumeButton.hidden = false
         
         print("in recordAudio")
         
@@ -78,21 +75,18 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
             playSoundsVC.receivedAudio = data
         }
     }
-
-    @IBAction func pauseRecording(sender: UIButton) {
-        audioRecorder.pause()
-        resumeButton.enabled = true
-        pauseButton.enabled = false
-        recordLabel.text = "Recording Paused"
-
-    }
     
-    @IBAction func resumeRecording(sender: UIButton) {
-        audioRecorder.record()
-        resumeButton.enabled = false
-        pauseButton.enabled = true
-        recordLabel.text = "Recording..."
-
+    @IBAction func stopResumeRecording(sender: UIButton) {
+        if audioRecorder.recording {
+            stopResumeButton.setImage(UIImage(named: "resume"), forState: UIControlState.Normal)
+            audioRecorder.pause()
+            recordLabel.text = "Recording Paused"
+        } else {
+            stopResumeButton.setImage(UIImage(named: "pause"), forState: UIControlState.Normal)
+            audioRecorder.record()
+            recordLabel.text = "Recording..."
+        }
+        
     }
     
     

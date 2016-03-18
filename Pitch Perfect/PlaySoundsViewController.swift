@@ -90,28 +90,46 @@ class PlaySoundsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    func playAudio(rate: Float, pitch:Float, echo:Float, reverb:Float) {
+        resetAudioEngine()
+        audioPlayer.currentTime = 0.0
+        
+        if rate != 1 {
+            audioPlayer.rate = rate
+            audioPlayer.play()
+        } else if pitch != 0 {
+            playAudioWithVariablePitch(pitch)
+        } else if echo != 0 {
+            playAudioWithEcho(echo)
+        } else {
+            print("It broke.")
+        }
+        
+    }
+    
     @IBAction func stopPlaying(sender: UIButton) {
-        audioPlayer.stop()
+        resetAudioEngine()
     }
     
     @IBAction func slowSound(sender: AnyObject) {
-        playAudioWithVariableRate(0.5)
+        playAudio(0.5, pitch: 0, echo: 0, reverb: 0)
     }
     
     @IBAction func fastSound(sender: UIButton) {
-        playAudioWithVariableRate(2.0)
+        playAudio(2.0, pitch: 0, echo: 0, reverb: 0)
 
     }
     
     @IBAction func chipmunkSound(sender: AnyObject) {
-        playAudioWithVariablePitch(1000)
+        playAudio(1, pitch: 1000, echo: 0, reverb: 0)
     }
     
     @IBAction func darthSound(sender: UIButton) {
-        playAudioWithVariablePitch(-1000)
+        playAudio(1, pitch: -1000, echo: 0, reverb: 0)
     }
     
     @IBAction func echoSound(sender: AnyObject) {
-        playAudioWithEcho(50)
+        playAudio(1, pitch: 0, echo: 50, reverb: 0)
     }
 }
